@@ -28,7 +28,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           mkdir -p output
-          ./repo-spector -x "${{ secrets.EXCLUDED_LANGUAGES }}"
+          ./repo-spector
 
       - name: Commit and Push updated SVGs
         shell: bash

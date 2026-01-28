@@ -42,5 +42,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "update: language stats svg"
-            git push https://x-access-token:${GH_TOKEN}@github.com/${{ vars.REPOSITORY }} HEAD:main
+            git push https://${GH_TOKEN}@github.com/${{ vars.REPOSITORY }}.git HEAD:main
           fi

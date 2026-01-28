@@ -9,12 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout target repo
         uses: actions/checkout@v6
+        with:
+          repository: da-pinci/da-pinci
+          token: ${{ secrets.GH_TOKEN }}
+          ref: main
 
       - name: Download repo-spector binary from GitHub Release
         shell: bash
@@ -24,16 +26,12 @@ jobs:
 
       - name: Run repo-spector CLI
         shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           mkdir -p output
           ./repo-spector
 
       - name: Commit and Push updated SVGs
         shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -42,5 +40,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "update: language stats svg"
-            git push https://${GH_TOKEN}@github.com/${{ vars.REPOSITORY }}.git HEAD:main
+            git push
           fi
